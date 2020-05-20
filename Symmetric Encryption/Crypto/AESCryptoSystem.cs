@@ -7,9 +7,9 @@ using System.Security.Cryptography;
 
 namespace AdminPanel.Crypto
 {
-    public class AESCryptoSystem
+    public static class AESCryptoSystem
     {
-        public  byte[] Encrypt(string plainText, byte[] Key, byte[] IV)
+        public static byte[] Encrypt(string plainText, byte[] Key, byte[] IV)
         {
             // Check arguments.
             if (plainText == null || plainText.Length <= 0)
@@ -49,7 +49,7 @@ namespace AdminPanel.Crypto
             return encrypted;
         }
 
-        public string Decrypt(byte[] cipherText, byte[] Key, byte[] IV)
+        public static string Decrypt(byte[] cipherText, byte[] Key, byte[] IV)
         {
             // Check arguments.
             if (cipherText == null || cipherText.Length <= 0)

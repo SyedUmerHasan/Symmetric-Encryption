@@ -36,6 +36,15 @@ namespace Symmetric_Encryption.Controllers
             return "success";
         }
 
+        [HttpGet("getKeys")]
+        public string getKeys()
+        {
+            Dictionary<string, object> json = new Dictionary<string, object>();
+            json.Add("key", Key);
+            json.Add("IV", IV);
+            return JsonConvert.SerializeObject(json);
+        }
+
         [HttpGet("rsa")]
         public string rsa(string shortMessagetoEncrypt)
         {
@@ -57,15 +66,11 @@ namespace Symmetric_Encryption.Controllers
 
             byte[] encrypted;
             string roundtrip;
-            // Create a new instance of the Aes
-            // class.  This generates a new key and initialization
-            // vector (IV).
 
-            AESCryptoSystem aes = new AESCryptoSystem();
             // Encrypt the string to an array of bytes.
-            encrypted = aes.Encrypt(msg, Key, IV);
+            encrypted = AESCryptoSystem.Encrypt(msg, Key, IV);
             // Decrypt the bytes to a string.
-            roundtrip = aes.Decrypt(encrypted, Key, IV);
+            roundtrip = AESCryptoSystem.Decrypt(encrypted, Key, IV);
 
             Dictionary<string, object> json = new Dictionary<string, object>();
             json.Add("data", msg);
@@ -79,13 +84,8 @@ namespace Symmetric_Encryption.Controllers
         {
             string msg = data;
             byte[] encrypted;
-            // Create a new instance of the Aes
-            // class.  This generates a new key and initialization
-            // vector (IV).
-
-            AESCryptoSystem aes = new AESCryptoSystem();
             // Encrypt the string to an array of bytes.
-            encrypted = aes.Encrypt(msg, Key, IV);
+            encrypted = AESCryptoSystem.Encrypt(msg, Key, IV);
 
             Dictionary<string, object> json = new Dictionary<string, object>();
             json.Add("encrypt", encrypted);
@@ -101,9 +101,8 @@ namespace Symmetric_Encryption.Controllers
             // class.  This generates a new key and initialization
             // vector (IV).
 
-            AESCryptoSystem aes = new AESCryptoSystem();
             // Decrypt the string to an array of bytes.
-            roundtrip = aes.Decrypt(encryptedMessage, Key, IV);
+            roundtrip = AESCryptoSystem.Decrypt(encryptedMessage, Key, IV);
 
             Dictionary<string, object> json = new Dictionary<string, object>();
             json.Add("encrypt", roundtrip);
